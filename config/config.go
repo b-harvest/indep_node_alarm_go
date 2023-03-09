@@ -33,11 +33,12 @@ type NODEAPPConfig struct {
 }
 
 type NODEConfig struct {
-	NODE_NAME       string         `toml:"moniker"`
-	PRIV_VAL_PATH   string         `toml:"priv_validator_key_file"`
-	PRIV_STATE_PATH string         `toml:"priv_validator_state_file"`
-	TX_INDEX        *TXINDEXConfig `toml:"tx_index"`
-	RPC             *RPCConfig     `toml:"rpc"`
+	NODE_NAME         string         `toml:"moniker"`
+	PRIV_VAL_PATH     string         `toml:"priv_validator_key_file"`
+	PRIV_STATE_PATH   string         `toml:"priv_validator_state_file"`
+	TX_INDEX          *TXINDEXConfig `toml:"tx_index"`
+	RPC               *RPCConfig     `toml:"rpc"`
+	DOUBLE_SIGN_CHECK int64          `toml:"double_sign_check_height"`
 }
 
 type GRPCConfig struct {

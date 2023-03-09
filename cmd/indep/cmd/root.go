@@ -51,17 +51,21 @@ func RootCmd() *cobra.Command {
 			pv := privval.LoadFilePV(keyFilePath, stateFilePath)
 			Validators, _ := client.GRPC.GetLValidatorSet(ctx)
 			var validator_runing bool = false
-
+		loop:
 			for _, Validator := range Validators {
 				ValidatorAddress := Validator.GetAddress()
 				if pv.GetAddress().String() == ValidatorAddress {
 					validator_runing = true
-					break
+					break loop
 				}
 			}
 
 			if validator_runing {
 				fmt.Println("This node is a validator")
+				fmt.Println("LastSign Height: ", pv.LastSignState.Height)
+				fmt.Println("LastSign Round: ", pv.LastSignState.Round)
+				fmt.Println("LastSign Step: ", pv.LastSignState.Step)
+				fmt.Println("double_sign_check_height: ", n_cfg.DOUBLE_SIGN_CHECK)
 				//missing block func go-rutin
 			} else {
 				fmt.Println("This node is not a validator")
