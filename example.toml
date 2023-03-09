@@ -6,4 +6,4 @@ pypd_herf = ""
 height_increasing_time_period = 10
 missing_block_trigger = 10
 free_disk_trigger = 10
-node_config_dir = ""
+node_home_dir = ""
