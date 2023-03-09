@@ -3,6 +3,7 @@ package config
 import (
 	"fmt"
 	"io/ioutil"
+	"time"
 
 	"github.com/BurntSushi/toml"
 	"github.com/rs/zerolog/log"
@@ -14,15 +15,14 @@ var (
 
 // Config defines all necessary configuration parameters.
 type INDEPConfig struct {
-	Telegram_Token                string `toml:"telegram_token"`
-	Telegram_Chat_Id              string `toml:"telegram_chat_id"`
-	Pypd_Api_Key                  string `toml:"pypd_api_key"`
-	Pypd_Service_Key              string `toml:"pypd_service_key"`
-	Pypd_Href                     string `toml:"pypd_herf"`
-	Height_Increasing_Time_Period int64  `toml:"height_increasing_time_period"`
-	Missing_Block_Trigger         int64  `toml:"missing_block_trigger"`
-	Free_Disk_Trigger             int64  `toml:"free_disk_trigger"`
-	Node_Home_Dir                 string `toml:"node_home_dir"`
+	Telegram_Token                string    `toml:"telegram_token"`
+	Telegram_Chat_Id              string    `toml:"telegram_chat_id"`
+	Pypd_Api_Key                  string    `toml:"pypd_api_key"`
+	Pypd_Service_Key              string    `toml:"pypd_service_key"`
+	Pypd_Href                     string    `toml:"pypd_herf"`
+	Height_Increasing_Time_Period time.Time `toml:"height_increasing_time_period"`
+	Missing_Block_Trigger         int64     `toml:"missing_block_trigger"`
+	Node_Home_Dir                 string    `toml:"node_home_dir"`
 }
 
 type NODEAPPConfig struct {

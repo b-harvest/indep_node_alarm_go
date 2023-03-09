@@ -72,6 +72,7 @@ func RootCmd() *cobra.Command {
 			}
 			// height stucked func go-rutin
 			// resource func go-rutin disk , cpu used, mem used, internet ping check
+			// -disk trigger  = total / use < 5%
 			// peers qualty and enough number func
 			// disk iavl io func
 			//config check - rest , kv etc..
