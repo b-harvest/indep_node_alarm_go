@@ -66,10 +66,21 @@ func RootCmd() *cobra.Command {
 				fmt.Println("LastSign Round: ", pv.LastSignState.Round)
 				fmt.Println("LastSign Step: ", pv.LastSignState.Step)
 				fmt.Println("double_sign_check_height: ", n_cfg.DOUBLE_SIGN_CHECK)
-				//missing block func go-rutin
+				//missing block func go-rutin ( add to jail duration)
 			} else {
 				fmt.Println("This node is not a validator")
 			}
+			// height stucked func go-rutin
+			// resource func go-rutin disk , cpu used, mem used
+			// peers qualty and enough number func
+			// disk iavl io func
+
+			//external mod set
+			//- indep client **Health** check - no data alert
+			//- external endpint health check
+			//- indep internal 라스트 하이트 - 외부 노드하이트 < missing_block_trigger
+			//- external node grpc and rpc conn check - no data alert
+			//- external node grpc and rpc conn Ping dely time
 
 			//client.RPC.ABCIQuery(ctx, []byte("validator-set"), nil)
 			//LatestBlock, _ := client.GRPC.GetLBlock(ctx)
