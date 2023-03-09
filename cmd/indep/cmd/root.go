@@ -71,9 +71,11 @@ func RootCmd() *cobra.Command {
 				fmt.Println("This node is not a validator")
 			}
 			// height stucked func go-rutin
-			// resource func go-rutin disk , cpu used, mem used
+			// resource func go-rutin disk , cpu used, mem used, internet ping check
 			// peers qualty and enough number func
 			// disk iavl io func
+			//config check - rest , kv etc..
+			//catching_up check
 
 			//external mod set
 			//- indep client **Health** check - no data alert
@@ -81,6 +83,10 @@ func RootCmd() *cobra.Command {
 			//- indep internal 라스트 하이트 - 외부 노드하이트 < missing_block_trigger
 			//- external node grpc and rpc conn check - no data alert
 			//- external node grpc and rpc conn Ping dely time
+
+			//ibc full node set
+			// bal check
+			// earliest_block_height check
 
 			//client.RPC.ABCIQuery(ctx, []byte("validator-set"), nil)
 			//LatestBlock, _ := client.GRPC.GetLBlock(ctx)
