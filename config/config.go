@@ -22,7 +22,7 @@ type INDEPConfig struct {
 	Height_Increasing_Time_Period int64  `toml:"height_increasing_time_period"`
 	Missing_Block_Trigger         int64  `toml:"missing_block_trigger"`
 	Free_Disk_Trigger             int64  `toml:"free_disk_trigger"`
-	Node_Config_Dir               string `toml:"node_config_dir"`
+	Node_Home_Dir                 string `toml:"node_home_dir"`
 }
 
 type NODEAPPConfig struct {
@@ -33,10 +33,11 @@ type NODEAPPConfig struct {
 }
 
 type NODEConfig struct {
-	NODE_NAME    string         `toml:"moniker"`
-	PRIV_VAL_DIR string         `toml:"priv_validator_key_file"`
-	TX_INDEX     *TXINDEXConfig `toml:"tx_index"`
-	RPC          *RPCConfig     `toml:"rpc"`
+	NODE_NAME       string         `toml:"moniker"`
+	PRIV_VAL_PATH   string         `toml:"priv_validator_key_file"`
+	PRIV_STATE_PATH string         `toml:"priv_validator_state_file"`
+	TX_INDEX        *TXINDEXConfig `toml:"tx_index"`
+	RPC             *RPCConfig     `toml:"rpc"`
 }
 
 type GRPCConfig struct {

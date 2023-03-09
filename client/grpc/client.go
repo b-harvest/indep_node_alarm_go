@@ -4,6 +4,8 @@ import (
 	"context"
 	"fmt"
 
+	tmservice "github.com/cosmos/cosmos-sdk/client/grpc/tmservice"
+	tmtype "github.com/tendermint/tendermint/types"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
@@ -11,6 +13,7 @@ import (
 
 // Client wraps GRPC client connection.
 type Client struct {
+	tmservice.ServiceClient
 	*grpc.ClientConn
 }
 
@@ -20,37 +23,42 @@ func NewClient(grpcURL string, timeout int64) (*Client, error) {
 	var conn *grpc.ClientConn
 	var err error
 
-	//urls := strings.Split(grpcURL, "//")
-	//if len(urls) > 2 {
-	//	panic(fmt.Sprintf("incorrect grpc endpoint: %s", urls))
-	//}
-
-	//if urls[0] == "https:" {
-	//	grpcopts = []grpc.DialOption{
-	//		grpc.WithTransportCredentials(credentials.NewTLS(nil)),
-	//	}
-	//	httpsurl := strings.Split(grpcURL, "//")
-	//	conn, err = grpc.Dial(httpsurl[1], grpcopts...)
-	//	if err != nil {
-	//		return &Client{}, fmt.Errorf("failed to connect GRPC client: %s", err)
-	//	}
-	//} else {
 	grpcopts = []grpc.DialOption{
 		grpc.WithInsecure(),
 		grpc.WithBlock(),
 	}
-	//httpurl := strings.Split(grpcURL, "//")
-	//fmt.println(httpurl)
 	conn, err = grpc.DialContext(context.Background(), grpcURL, grpcopts...)
 	if err != nil {
 		return &Client{}, fmt.Errorf("failed to connect GRPC client: %s", err)
 	}
-	//}
+	tmclient := tmservice.NewServiceClient(conn)
 
-	return &Client{conn}, nil
+	return &Client{tmclient, conn}, nil
 }
 
 // IsNotFound returns not found status.
 func IsNotFound(err error) bool {
 	return status.Convert(err).Code() == codes.NotFound
+}
+
+func (c *Client) GetLBlock(ctx context.Context) (*tmtype.Block, error) {
+	LatestBlockProto, err := c.GetLatestBlock(context.Background(), &tmservice.GetLatestBlockRequest{})
+	if err != nil {
+		return nil, fmt.Errorf("failed to get LatestBlockProto: %s", err)
+	}
+	LatestBlock, err := tmtype.BlockFromProto(LatestBlockProto.Block)
+	if err != nil {
+		return nil, fmt.Errorf("failed to get LatestBlock: %s", err)
+	}
+	return LatestBlock, nil
+}
+
+func (c *Client) GetLValidatorSet(ctx context.Context) ([]*tmservice.Validator, error) {
+	LatestValidatorSetProto, err := c.GetLatestValidatorSet(context.Background(), &tmservice.GetLatestValidatorSetRequest{})
+	if err != nil {
+		return nil, fmt.Errorf("failed to get LatestValidatorSetProto: %s", err)
+	}
+	Validators := LatestValidatorSetProto.GetValidators()
+
+	return Validators, nil
 }
