@@ -1,4 +1,4 @@
-telegram_token = "http://localhost:26657"
+telegram_token = ""
 telegram_chat_id = ""
 pypd_api_key = ""
 pypd_service_key = ""
