@@ -52,6 +52,17 @@ func (c *Client) GetLBlock(ctx context.Context) (*tmtype.Block, error) {
 	}
 	return LatestBlock, nil
 }
+func (c *Client) GetLByBlock(ctx context.Context, block_num int64) (*tmtype.Block, error) {
+	BlockProto, err := c.GetBlockByHeight(context.Background(), &tmservice.GetBlockByHeightRequest{Height: block_num})
+	if err != nil {
+		return nil, fmt.Errorf("failed to get LatestBlockProto: %s", err)
+	}
+	Block, err := tmtype.BlockFromProto(BlockProto.Block)
+	if err != nil {
+		return nil, fmt.Errorf("failed to get LatestBlock: %s", err)
+	}
+	return Block, nil
+}
 
 func (c *Client) GetLValidatorSet(ctx context.Context) ([]*tmservice.Validator, error) {
 	LatestValidatorSetProto, err := c.GetLatestValidatorSet(context.Background(), &tmservice.GetLatestValidatorSetRequest{})
@@ -61,4 +72,13 @@ func (c *Client) GetLValidatorSet(ctx context.Context) ([]*tmservice.Validator, 
 	Validators := LatestValidatorSetProto.GetValidators()
 
 	return Validators, nil
+}
+
+func (c *Client) GetSyncInfo(ctx context.Context) (bool, error) {
+	LatestSyncingProto, err := c.GetSyncing(context.Background(), &tmservice.GetSyncingRequest{})
+	if err != nil {
+		return false, fmt.Errorf("failed to get LatestValidatorSetProto: %s", err)
+	}
+	Syncing := LatestSyncingProto.GetSyncing()
+	return Syncing, nil
 }

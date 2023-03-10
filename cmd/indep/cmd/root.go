@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/b-harvest/indep_node_alarm_go/alert"
 	"github.com/b-harvest/indep_node_alarm_go/client"
 	"github.com/b-harvest/indep_node_alarm_go/config"
 	"github.com/spf13/cobra"
@@ -71,6 +72,9 @@ func RootCmd() *cobra.Command {
 				fmt.Println("This node is not a validator")
 			}
 			// height stucked func go-rutin
+			fmt.Println(client.GRPC.GetSyncInfo(ctx))
+			//client.RPC.Subscribe(ctx)
+			alert.Height_stucked(ctx, client.GRPC, i_cfg.Height_Increasing_Time_Period)
 			// resource func go-rutin disk , cpu used, mem used, internet ping check
 			// -disk trigger  = total / use < 5%
 			// peers qualty and enough number func
@@ -88,7 +92,6 @@ func RootCmd() *cobra.Command {
 			//ibc full node set
 			// bal check
 			// earliest_block_height check
-
 			//client.RPC.ABCIQuery(ctx, []byte("validator-set"), nil)
 			//LatestBlock, _ := client.GRPC.GetLBlock(ctx)
 			//if err != nil {
