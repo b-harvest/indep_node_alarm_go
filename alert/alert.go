@@ -14,7 +14,7 @@ func Height_stucked(ctx context.Context, client *grpc.Client, Height_Increasing_
 	before_block, _ := client.GetLByBlock(ctx, current_height-1)
 	current_block_time_difference := current_block.Time.Sub(before_block.Time)
 	for {
-		//ParseTime, _ := time.ParseDuration("1s")
+		//ParseTime, _ := time.ParseDuration("1s"
 		//fmt.Println(ParseTime)
 		time.Sleep(current_block_time_difference)
 		sync_info, _ := client.GetSyncInfo(ctx)
